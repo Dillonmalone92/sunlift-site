@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SunLift Energy Foundation</title>
+  <meta name="description" content="Grant-funded solar solutions for community-serving buildings across Florida." />
+  <style>
+    :root{
+      --bg:#06101d;
+      --bg2:#0b1728;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.04);
+      --text:#eef4ff;
+      --muted:#a9b6cb;
+      --gold:#f6c453;
+      --gold2:#ffd978;
+      --cyan:#56d4ff;
+      --green:#44d39a;
+      --border:rgba(255,255,255,.11);
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+      --radius:24px;
+      --max:1180px;
+    }
+
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(246,196,83,.14), transparent 28%),
+        radial-gradient(circle at 0% 20%, rgba(86,212,255,.10), transparent 24%),
+        radial-gradient(circle at 100% 100%, rgba(68,211,154,.09), transparent 25%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    a { color:inherit; text-decoration:none; }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 22px; }
+
+    .topbar{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter: blur(16px);
+      background:rgba(6,16,29,.72);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px 0;
+      gap:18px;
+    }
+    .brand{ display:flex; align-items:center; gap:14px; }
+    .logo{
+      width:58px; height:58px; border-radius:20px;
+      display:grid; place-items:center;
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid var(--border);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo:before{
+      content:""; position:absolute; inset:-40% auto auto -10%;
+      width:90px; height:90px; background:radial-gradient(circle, rgba(246,196,83,.22), transparent 55%);
+      pointer-events:none;
+    }
+    .brand-title{ font-size:12px; letter-spacing:.34em; text-transform:uppercase; color:var(--gold2); font-weight:800; }
+    .brand-sub{ font-size:14px; color:var(--muted); margin-top:3px; }
+    .navlinks{
+      display:flex; gap:28px; align-items:center; color:var(--muted);
+      font-size:14px;
+    }
+    .navlinks a:hover{ color:#fff; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px; border-radius:16px; padding:13px 20px;
+      font-weight:700; transition:.22s ease; cursor:pointer;
+      border:1px solid transparent;
+    }
+    .btn:hover{ transform:translateY(-1px); }
+    .btn-gold{
+      background:linear-gradient(180deg, var(--gold2), var(--gold));
+      color:#132033;
+      box-shadow:0 14px 28px rgba(246,196,83,.18);
+    }
+    .btn-soft{
+      background:rgba(255,255,255,.06);
+      border-color:rgba(255,255,255,.1);
+      color:#fff;
+    }
+
+    .hero{
+      padding:64px 0 30px;
+      display:grid; grid-template-columns: 1.15fr .85fr; gap:34px;
+      align-items:center;
+    }
+    .eyebrow{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px; border-radius:999px;
+      color:#bfefff; background:rgba(86,212,255,.09); border:1px solid rgba(86,212,255,.16);
+      font-size:14px;
+    }
+    .dot{ width:9px; height:9px; border-radius:999px; background:var(--green); }
+    h1{
+      font-size: clamp(42px, 6vw, 76px);
+      line-height:1.02; margin:18px 0 18px; letter-spacing:-.035em;
+    }
+    .highlight{ color:var(--gold2); }
+    .lead{
+      max-width:780px; font-size:19px; line-height:1.75; color:var(--muted);
+    }
+    .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; margin-top:30px; }
+
+    .stats{
+      display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; margin-top:28px;
+    }
+    .stat{
+      border:1px solid var(--border); background:var(--card); border-radius:22px; padding:22px;
+      box-shadow: var(--shadow);
+    }
+    .stat .v{ font-size:34px; font-weight:800; }
+    .stat .l{ margin-top:8px; color:var(--muted); font-size:14px; }
+
+    .panel{
+      position:relative; border-radius:34px; padding:1px;
+      background:linear-gradient(135deg, rgba(246,196,83,.38), rgba(86,212,255,.16), rgba(68,211,154,.18));
+      box-shadow: var(--shadow);
+    }
+    .panel-inner{
+      border-radius:33px; padding:22px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.035));
+      backdrop-filter: blur(14px);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .mini-card{
+      border-radius:26px; padding:24px; background:rgba(7,16,29,.88); border:1px solid var(--border);
+    }
+    .mini-badge{
+      display:inline-flex; padding:8px 12px; border-radius:14px; background:rgba(68,211,154,.12); color:#9df0ca; font-size:13px; font-weight:700;
+    }
+    .mini-title{ font-size:30px; line-height:1.16; margin:14px 0 22px; }
+    .feature-list{ display:grid; gap:14px; }
+    .feature{
+      border-radius:18px; padding:16px 16px 15px; border:1px solid rgba(255,255,255,.07);
+      background:rgba(255,255,255,.04);
+    }
+    .feature strong{ display:block; margin-bottom:6px; }
+    .feature span{ color:var(--muted); line-height:1.65; font-size:14px; }
+
+    .section{ padding:34px 0; }
+    .grid-2{ display:grid; grid-template-columns:.96fr 1.04fr; gap:22px; }
+    .card{
+      border:1px solid var(--border);
+      background:var(--card);
+      border-radius:30px;
+      padding:28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+    .card-dark{
+      background:linear-gradient(180deg, rgba(9,17,29,.94), rgba(14,24,38,.94));
+    }
+    .kicker{
+      text-transform:uppercase; letter-spacing:.28em; font-size:12px; font-weight:800;
+      margin-bottom:14px;
+    }
+    .k-cyan{ color:#9aeaff; }
+    .k-gold{ color:var(--gold2); }
+    .k-green{ color:#9df0ca; }
+
+    h2{ font-size: clamp(30px, 4vw, 46px); line-height:1.12; margin:0 0 12px; letter-spacing:-.03em; }
+    .body{ color:var(--muted); line-height:1.78; font-size:17px; }
+
+    .chips{
+      display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:18px;
+    }
+    .chip{
+      border-radius:18px; padding:15px 16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08);
+      color:#dce8f6; font-size:14px;
+    }
+
+    .section-head{ max-width:820px; margin-bottom:24px; }
+    .cards-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+    .program{
+      padding:28px; border-radius:30px; background:var(--card); border:1px solid var(--border); box-shadow: var(--shadow);
+      transition:.2s ease;
+    }
+    .program:hover{ transform:translateY(-4px); }
+    .icon{
+      width:56px; height:56px; border-radius:18px; display:grid; place-items:center;
+      background:linear-gradient(135deg, var(--gold2), var(--cyan));
+      color:#0b1728; font-size:28px; font-weight:900; margin-bottom:18px;
+    }
+    .program h3{ margin:0 0 10px; font-size:24px; }
+    .program p{ margin:0; color:var(--muted); line-height:1.72; }
+
+    .impact{
+      display:grid; grid-template-columns:1fr 1fr; gap:20px;
+    }
+    .list{ display:grid; gap:14px; margin-top:18px; }
+    .list-item{
+      background:rgba(255,255,255,.05); border-radius:20px; padding:16px 18px; border:1px solid rgba(255,255,255,.08); color:#dfeaf7;
+    }
+
+    .banner{
+      padding:1px; border-radius:34px; background:linear-gradient(90deg, rgba(246,196,83,.75), rgba(255,255,255,.25), rgba(86,212,255,.55));
+      box-shadow: var(--shadow);
+    }
+    .banner-inner{
+      border-radius:33px; padding:34px;
+      background:linear-gradient(180deg, rgba(6,16,29,.97), rgba(10,20,34,.97));
+      display:grid; grid-template-columns:1fr .9fr; gap:18px;
+      align-items:center;
+    }
+    .mini-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+    .mini{
+      border-radius:20px; padding:18px; border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.04);
+    }
+    .mini h4{ margin:0 0 8px; font-size:26px; }
+    .mini p{ margin:0; color:var(--muted); line-height:1.65; font-size:14px; }
+
+    .contact{
+      display:grid; grid-template-columns:1fr .9fr; gap:22px;
+    }
+    .form-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:22px; }
+    input, textarea{
+      width:100%; border:none; outline:none; color:#fff;
+      background:rgba(5,13,24,.84); border:1px solid rgba(255,255,255,.08);
+      border-radius:18px; padding:16px 16px; font-size:15px;
+    }
+    input::placeholder, textarea::placeholder{ color:#748399; }
+    textarea{ min-height:150px; resize:vertical; margin-top:14px; }
+    .contact-box{
+      border-radius:28px; padding:26px; background:rgba(9,17,29,.92); border:1px solid var(--border); box-shadow: var(--shadow);
+    }
+    .info{ display:grid; gap:14px; margin-top:20px; color:var(--muted); }
+    .info-item{ display:flex; gap:12px; align-items:center; }
+    .swatches{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:20px; }
+    .swatch{
+      display:grid; gap:8px; font-size:11px; color:#7e8ea8;
+    }
+    .color{ height:46px; border-radius:16px; border:1px solid rgba(255,255,255,.08); }
+
+    footer{
+      padding:26px 0 50px; color:#7d8ca2; font-size:14px;
+    }
+
+    @media (max-width: 980px){
+      .hero, .grid-2, .impact, .banner-inner, .contact { grid-template-columns:1fr; }
+      .cards-3 { grid-template-columns:1fr; }
+      .stats { grid-template-columns:1fr; }
+      .chips, .mini-grid, .form-grid { grid-template-columns:1fr; }
+      .navlinks { display:none; }
+      h1{ max-width:14ch; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a href="#top" class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="20" r="10" fill="#F6C453"/>
+            <path d="M12 44C18 33 27 28 32 28C37 28 46 33 52 44" stroke="#56D4FF" stroke-width="4" stroke-linecap="round"/>
+            <path d="M18 48H46" stroke="#44D39A" stroke-width="4" stroke-linecap="round"/>
+            <path d="M24 52H40" stroke="white" stroke-opacity=".92" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">SunLift</div>
+          <div class="brand-sub">Energy Foundation</div>
+        </div>
+      </a>
+
+      <nav class="navlinks">
+        <a href="#mission">Mission</a>
+        <a href="#programs">Programs</a>
+        <a href="#impact">Impact</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a class="btn btn-gold" href="#contact">Partner With Us</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="wrap hero">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Affordable solar access for Florida community organizations</div>
+        <h1>A better energy future for the buildings that <span class="highlight">serve people first.</span></h1>
+        <div class="lead">
+          SunLift Energy Foundation helps churches, schools, nonprofits, and community centers explore grant-funded solar solutions that can reduce energy costs, improve resilience, and free up more resources for the communities they serve.
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-gold" href="#contact">Start a Partnership</a>
+          <a class="btn btn-soft" href="#programs">Explore Programs</a>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="v">20–60%</div>
+            <div class="l">Potential energy savings</div>
+          </div>
+          <div class="stat">
+            <div class="v">$0</div>
+            <div class="l">Upfront cost goal for partners</div>
+          </div>
+          <div class="stat">
+            <div class="v">Florida</div>
+            <div class="l">Community-focused mission</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-inner">
+          <div class="mini-card">
+            <span class="mini-badge">Florida Focused</span>
+            <div class="mini-title">Solar solutions that strengthen real community impact</div>
+            <div class="feature-list">
+              <div class="feature">
+                <strong>Reduce overhead</strong>
+                <span>Help organizations redirect money away from high utility costs and back into the people and programs they exist to serve.</span>
+              </div>
+              <div class="feature">
+                <strong>Increase resilience</strong>
+                <span>Build stronger energy readiness for buildings that matter during storms, outages, and high-demand seasons.</span>
+              </div>
+              <div class="feature">
+                <strong>Keep it simple</strong>
+                <span>A clean partnership model designed for outreach, credibility, grant applications, and long-term growth.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="mission">
+      <div class="grid-2">
+        <div class="card">
+          <div class="kicker k-cyan">Mission</div>
+          <h2>Affordable solar energy for organizations that make communities stronger.</h2>
+          <div class="body">
+            SunLift Energy Foundation exists to help community-serving organizations explore solar opportunities that lower operating costs, improve stability, and create more room for local impact.
+          </div>
+        </div>
+
+        <div class="card card-dark">
+          <div class="kicker k-green">Vision</div>
+          <h2>A future where more organizations can spend less on electricity and more on serving people.</h2>
+          <div class="chips">
+            <div class="chip">Lower monthly electricity costs</div>
+            <div class="chip">More budget available for community programs</div>
+            <div class="chip">Stronger readiness during outages and storms</div>
+            <div class="chip">A modern, mission-aligned public image</div>
+            <div class="chip">A cleaner long-term operating model</div>
+            <div class="chip">Grant-friendly positioning for future growth</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="programs">
+      <div class="section-head">
+        <div class="kicker k-gold">Programs</div>
+        <h2>Built to look credible, feel modern, and grow with your mission</h2>
+        <div class="body">
+          A strong first impression matters. This model is designed to speak clearly to potential partners, funders, and organizations looking for practical energy solutions.
+        </div>
+      </div>
+
+      <div class="cards-3">
+        <div class="program">
+          <div class="icon">☀</div>
+          <h3>Solar for Community Buildings</h3>
+          <p>Grant-focused solar projects for churches, schools, community centers, and nonprofits that want to reduce overhead and increase impact.</p>
+        </div>
+        <div class="program">
+          <div class="icon">⚡</div>
+          <h3>Resilience Upgrades</h3>
+          <p>Solar and battery planning that helps organizations stay more prepared during outages, storms, and rising energy costs.</p>
+        </div>
+        <div class="program">
+          <div class="icon">🤝</div>
+          <h3>Funding & Partnership Support</h3>
+          <p>A clear partnership model built to help organizations explore solar opportunities without needing to manage the process alone.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="impact">
+      <div class="impact">
+        <div class="card">
+          <div class="kicker k-cyan">Why organizations work with us</div>
+          <div class="list">
+            <div class="list-item">No-cost or low-cost solar opportunities through a grant-focused partnership model</div>
+            <div class="list-item">A chance to lower long-term utility expenses and strengthen financial stability</div>
+            <div class="list-item">A modern resilience story that supports public trust, donors, and local credibility</div>
+          </div>
+        </div>
+
+        <div class="card card-dark">
+          <div class="kicker k-gold">Best fit partners</div>
+          <div class="chips">
+            <div class="chip">Churches & faith-based organizations</div>
+            <div class="chip">Private schools & academies</div>
+            <div class="chip">Community centers</div>
+            <div class="chip">Shelters & nonprofit facilities</div>
+            <div class="chip">Mission-driven local organizations</div>
+            <div class="chip">Buildings with high utility costs</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section">
+      <div class="banner">
+        <div class="banner-inner">
+          <div>
+            <div class="kicker k-gold">Positioning</div>
+            <h2>A modern nonprofit brand built to open doors.</h2>
+            <div class="body">
+              SunLift Energy Foundation is positioned to communicate trust, local impact, and practical solar opportunity without sounding overly technical or hard to understand.
+            </div>
+          </div>
+          <div class="mini-grid">
+            <div class="mini">
+              <h4>Clean</h4>
+              <p>Professional enough for outreach, grant packets, and first meetings.</p>
+            </div>
+            <div class="mini">
+              <h4>Modern</h4>
+              <p>Designed to feel premium, mission-led, and visually memorable.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section" id="contact">
+      <div class="contact">
+        <div class="card">
+          <div class="kicker k-green">Get involved</div>
+          <h2>Let’s explore a solar partnership</h2>
+          <div class="body">
+            If you lead, own, or manage a community-serving building in Florida, SunLift Energy Foundation would love to explore whether your facility could be a fit for a future solar project.
+          </div>
+
+          <div class="form-grid">
+            <input placeholder="Your name" />
+            <input placeholder="Organization name" />
+            <input placeholder="Email address" />
+            <input placeholder="Phone number" />
+          </div>
+          <textarea placeholder="Tell us about your building, your goals, or your community impact"></textarea>
+          <div style="margin-top:14px;">
+            <a class="btn btn-gold" href="#">Submit Interest</a>
+          </div>
+        </div>
+
+        <div class="contact-box">
+          <div class="kicker k-cyan">Contact & brand details</div>
+
+          <div class="brand" style="margin-top:10px;">
+            <div class="logo" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="20" r="10" fill="#F6C453"/>
+                <path d="M12 44C18 33 27 28 32 28C37 28 46 33 52 44" stroke="#56D4FF" stroke-width="4" stroke-linecap="round"/>
+                <path d="M18 48H46" stroke="#44D39A" stroke-width="4" stroke-linecap="round"/>
+                <path d="M24 52H40" stroke="white" stroke-opacity=".92" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div style="font-size:20px; font-weight:800;">SunLift Energy Foundation</div>
+              <div style="color:var(--muted); margin-top:4px;">Modern nonprofit branding with a solar and resilience focus</div>
+            </div>
+          </div>
+
+          <div class="info">
+            <div class="info-item">✉ <span>info@sunliftenergy.org</span></div>
+            <div class="info-item">☎ <span>(555) 555-5555</span></div>
+            <div class="info-item">📍 <span>Florida, United States</span></div>
+          </div>
+
+          <div class="swatches">
+            <div class="swatch">
+              <div class="color" style="background:#020617;"></div>
+              <div>#020617</div>
+            </div>
+            <div class="swatch">
+              <div class="color" style="background:#0f172a;"></div>
+              <div>#0f172a</div>
+            </div>
+            <div class="swatch">
+              <div class="color" style="background:#fcd34d;"></div>
+              <div>#fcd34d</div>
+            </div>
+            <div class="swatch">
+              <div class="color" style="background:#22d3ee;"></div>
+              <div>#22d3ee</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">© 2026 SunLift Energy Foundation. Built for outreach, credibility, and community impact.</div>
+  </footer>
+</body>
+</html>
